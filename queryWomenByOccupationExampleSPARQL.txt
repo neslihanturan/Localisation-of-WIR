@@ -1,0 +1,18 @@
+#Female from an occupation with most number of sitelinks (but not English Wikipedia)
+#PREFIX schema: <http://schema.org/>
+
+SELECT ?item ?itemLabel ?linkcount WHERE {
+    ?item wdt:P31 wd:Q5 . # what to query? people
+    ?item wdt:P21 wd:Q6581072 . # whose gender women
+    ?item wdt:P106 wd:Q901 . # whose occupation is scientist
+    ?item wikibase:sitelinks ?linkcount .
+  FILTER (?linkcount >= 1) .       # only include items with 1 or more sitelinks (linked in other wikipedias)
+  FILTER NOT EXISTS {
+    ?article schema:about ?item .
+    ?article schema:inLanguage "tr" . # not exists in Turkis Vikipedi
+    ?article schema:isPartOf <https://tr.wikipedia.org/>
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,de,es,ar,fr" }
+}
+GROUP BY ?item ?itemLabel ?linkcount
+ORDER BY DESC(?linkcount)
