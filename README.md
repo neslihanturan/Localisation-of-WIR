@@ -59,4 +59,22 @@ LIMIT 300
 
 {{Wikidata list end}}
 ```
+### 3. PyWikiBot usage to create multiple files
+PyWikiBot is a rich tool to make several operations on wikis. We will be using "pagefromfile" tool. Here is the [documentation](https://www.mediawiki.org/wiki/Manual:Pywikibot) (you may be needed to set your configuration settings first according to your account information and the language code of the Wikipedia you will be editing)
+
+For out specific purpose create input files in form of:
+```
+{{-start-}}
+'''WikiProject:WomenInRedInYourLanguage/RedListInYourLanguage/Academician''' and here the content of file (ie. list of women who is academician) should be added. You can use exampleWikitextUsingListeria.txt file as a template for this content.
+{{-stop-}}
+{{-start-}}
+'''WikiProject:WomenInRedInYourLanguage/RedListInYourLanguage/Musician''' and here the content of file (ie. list of women who is academician) should be added. You can use exampleWikitextUsingListeria.txt file as a template for this content.
+{{-stop-}}
+...
+...
+```
+Where everything between {{-start-}} and {{-stop-}} will be a single page content which should be written according to wikitext format. The first item between triple quotes ( \'\'\'  \'\'\' ) will be the name of the page. To run the script you simply run this command from terminal:
+```
+python pwb.py pagefromfile -showdiff -file:inputFile.txt
+```
 
