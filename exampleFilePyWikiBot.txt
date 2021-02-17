@@ -1,0 +1,33 @@
+{{-start-}}
+'''Vikiproje:Kadın/Kırmızılı kadınlar/Kırmızı liste/Akademisyen''' 
+
+{{Kırmızılı Kadınlar Üstbilgi}}
+
+Bu listede tamamlanan kırmızı bağlantılar günlük olarak Listeria bot tarafından kaldırılacaktır. Bu sayfada el ile değişiklik yapmayınız. Site bağlantıları o kadından Türkçe Vikipedi içerisinde kaç kere bahsedildiğini göstermektedir. 
+
+{{Wikidata list|sparql=PREFIX schema: <http://schema.org/>
+SELECT ?item ?itemLabel ?linkcount WHERE {
+    ?item wdt:P31 wd:Q5 .
+    ?item wdt:P21 wd:Q6581072 .
+    ?item wdt:P106 wd:Q3400985 .
+    ?item wikibase:sitelinks ?linkcount .
+  FILTER (?linkcount >= 1) .       # only include items with 1 or more sitelinks
+  FILTER NOT EXISTS {
+    ?article schema:about ?item .
+    ?article schema:inLanguage "tr" .
+    ?article schema:isPartOf <https://tr.wikipedia.org/>
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,de,es,ar,fr" }
+}
+ORDER BY DESC(?linkcount)
+LIMIT 300
+|columns=number:#,label:Ad,P18,description:açıklama,P27,item:wikidata maddesi,?linkcount:site bağlantıları
+|section=131
+|min_section=3
+|links=red
+|thumb=128
+|autolist=fallback
+}}
+
+{{Wikidata list end}}
+{{-stop-}}
