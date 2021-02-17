@@ -28,4 +28,35 @@ Check out queryWomenByOccupationExampleSPARQL.txt file or simply try the query o
 ...
 ORDER BY DESC(?linkcount) #Ordered by number of links in other wikipedias, this can give an idea about the fame of women
 ```
+### 2. Listeria bot usage
+Now, all the lists we have created at Wikidata should be carried on Wikipedia. Listeria helps to use these queries to define a list usable in Wikipedia. Here is the [documentation](https://www.wikidata.org/wiki/Template:Wikidata_list) of the tool.
+
+Here is the wikitext form of my implementation in Turkish Vikipedi:
+```
+{{Wikidata list|sparql=PREFIX schema: <http://schema.org/>
+SELECT ?item ?itemLabel ?linkcount WHERE {
+    ?item wdt:P31 wd:Q5 .
+    ?item wdt:P21 wd:Q6581072 .
+    ?item wdt:P106 wd:Q3400985 .
+    ?item wikibase:sitelinks ?linkcount .
+  FILTER (?linkcount >= 1) .       # only include items with 1 or more sitelinks
+  FILTER NOT EXISTS {
+    ?article schema:about ?item .
+    ?article schema:inLanguage "tr" .
+    ?article schema:isPartOf <https://tr.wikipedia.org/>
+  }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "en,de,es,ar,fr" }
+}
+ORDER BY DESC(?linkcount)
+LIMIT 300
+|columns=number:#,label:Ad,P18,description:açıklama,P27,item:wikidata maddesi,?linkcount:site bağlantıları
+|section=131
+|min_section=3
+|links=red
+|thumb=128
+|autolist=fallback
+}}
+
+{{Wikidata list end}}
+```
 
